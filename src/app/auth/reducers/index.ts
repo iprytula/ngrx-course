@@ -7,10 +7,14 @@ import {
   MetaReducer,
   on,
 } from "@ngrx/store";
-import { loginAction } from "../auth.actions";
+import { loginAction, logoutAction } from "../auth.actions";
 import { User } from "../model/user.model";
 
 export const authFeatureKey = "auth";
+
+export interface AppState {
+  auth: AuthState
+}
 
 export interface AuthState {
   user: User;
@@ -30,5 +34,10 @@ export const authReducer = createReducer(
     return {
       user: action.user,
     };
+  }),
+  on(logoutAction, (state, action) => {
+    return {
+      user: undefined
+    }
   })
 );

@@ -23,14 +23,14 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private store: Store<AuthService>
-  ) {
-    this.form = fb.group({
+  ) {}
+
+  ngOnInit() {
+    this.form = this.fb.group({
       email: ["test@angular-university.io", [Validators.required]],
       password: ["test", [Validators.required]],
     });
   }
-
-  ngOnInit() {}
 
   login() {
     const val = this.form.value;
