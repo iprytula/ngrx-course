@@ -12,10 +12,6 @@ import { User } from "../model/user.model";
 
 export const authFeatureKey = "auth";
 
-export interface AppState {
-  auth: AuthState
-}
-
 export interface AuthState {
   user: User;
 }
