@@ -1,21 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import {
   NavigationCancel,
   NavigationEnd,
   NavigationError,
   NavigationStart,
   Router,
-} from "@angular/router";
-import { AuthState } from "./auth/reducers";
-import { isLoggedInSelector, isLoggedOutSelector } from "./auth/auth.selectors";
-import { loginAction, logoutAction } from "./auth/auth.actions";
+} from '@angular/router';
+import { AuthState } from './auth/reducers';
+import * as AuthSelectors from './auth/auth.selectors';
+import { login, logout } from './auth/auth.actions';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   loading = true;
@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private store: Store<AuthState>) {}
 
   ngOnInit() {
-    const userProfile = localStorage.getItem("user");
+    const userProfile = localStorage.getItem('user');
 
     if (userProfile) {
-      this.store.dispatch(loginAction({ user: JSON.parse(userProfile) }));
+      this.store.dispatch(login({ user: JSON.parse(userProfile) }));
     }
 
     this.router.events.subscribe((event) => {
@@ -51,11 +51,11 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.isLoggedIn$ = this.store.select(isLoggedInSelector);
-    this.isLoggedOut$ = this.store.select(isLoggedOutSelector);
+    this.isLoggedIn$ = this.store.select(AuthSelectors.isLoggedIn);
+    this.isLoggedOut$ = this.store.select(AuthSelectors.isLoggedOut);
   }
 
   logout() {
-    this.store.dispatch(logoutAction());
+    this.store.dispatch(logout());
   }
 }

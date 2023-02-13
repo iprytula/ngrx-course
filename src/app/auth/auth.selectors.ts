@@ -1,14 +1,8 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { AuthState } from "./reducers";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { AuthState } from './reducers';
 
-export const authStateSelector = createFeatureSelector<AuthState>("auth");
+export const authState = createFeatureSelector<AuthState>('auth');
 
-export const isLoggedInSelector = createSelector(
-  authStateSelector,
-  auth => !!auth.user
-);
+export const isLoggedIn = createSelector(authState, (auth) => !!auth.user);
 
-export const isLoggedOutSelector = createSelector(
-  isLoggedInSelector,
-  loggedIn => !loggedIn
-)
+export const isLoggedOut = createSelector(isLoggedIn, (loggedIn) => !loggedIn);
