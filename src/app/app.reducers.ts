@@ -1,7 +1,6 @@
 import { routerReducer } from '@ngrx/router-store';
 import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
-import { environment } from '../../environments/environment';
-import { authReducer, AuthState } from '../auth/reducers';
+import { environment } from '../environments/environment';
 
 export interface AppState {}
 
@@ -15,7 +14,7 @@ export function logger(reducer: ActionReducer<any>): ActionReducer<any> {
 }
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
-  ? [logger]
+  ? /*[logger]*/ []
   : [];
 
 export const reducers: ActionReducerMap<AppState> = {

@@ -8,7 +8,7 @@ import {
   NavigationStart,
   Router,
 } from '@angular/router';
-import { AuthState } from './auth/reducers';
+import { AuthState } from './auth/auth.reducers';
 import * as AuthSelectors from './auth/auth.selectors';
 import { login, logout } from './auth/auth.actions';
 

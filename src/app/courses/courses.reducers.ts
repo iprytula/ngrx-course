@@ -3,8 +3,8 @@ import {
   on,
 } from '@ngrx/store';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { Course } from '../model/course';
-import * as CoursesActions from '../courses.actions';
+import { Course } from './model/course';
+import * as CoursesActions from './courses.actions';
 
 export const coursesFeatureKey = 'courses';
 

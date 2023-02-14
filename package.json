@@ -1,15 +1,15 @@
 {
-  "name": "angular-ngrx-course",
+  "name": "ngrx-course",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "ng": "nx",
-    "start": "nx serve  --proxy-config ./proxy.json",
+    "ng": "ng",
+    "start": "ng serve  --proxy-config ./proxy.json",
     "server": "ts-node -P ./server/server.tsconfig.json ./server/server.ts",
-    "build": "nx build",
-    "test": "nx test",
-    "lint": "nx lint",
-    "e2e": "nx e2e"
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
