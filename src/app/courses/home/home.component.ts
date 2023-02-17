@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   beginnerCourses$: Observable<Course[]>;
   advancedCourses$: Observable<Course[]>;
   promoTotal$: Observable<number>;
-  loading$: Observable<boolean>;
+  allCoursesLoaded$: Observable<boolean>;
 
   constructor(
     private dialog: MatDialog,
@@ -27,10 +27,10 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loading$ = this.store.select(CoursesSelectors.selectFetchingData);
     this.beginnerCourses$ = this.store.select(CoursesSelectors.selectBeginnerCourses);
     this.advancedCourses$ = this.store.select(CoursesSelectors.selectAdvancedCourses);
     this.promoTotal$ = this.store.select(CoursesSelectors.selectInPromoCount);
+    this.allCoursesLoaded$ = this.store.select(CoursesSelectors.selectCoursesLoadedFlag);
   }
 
   onAddCourse() {

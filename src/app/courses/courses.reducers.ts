@@ -10,6 +10,7 @@ export const coursesFeatureKey = 'courses';
 
 export interface CoursesState extends EntityState<Course> {
   error: any;
+  allCoursesLoaded: boolean,
   fetchingData: boolean
 }
 
@@ -26,23 +27,48 @@ const compareCourses = (c1: Course, c2: Course) => {
 
 export const adapter = createEntityAdapter<Course>({ sortComparer: compareCourses });
 
-export const initialState = adapter.getInitialState({ error: null, fetchingData: false });
+export const initialState = adapter.getInitialState({
+  error: null,
+  allCoursesLoaded: false,
+  fetchingData: false
+});
 
 export const coursesReducer = createReducer(
   initialState,
-  on(CoursesActions.loadCourses, (state, action) => {
-    return {...state, fetchingData: true}
-  }),
   on(CoursesActions.loadCoursesSuccess, (state, { courses }) => {
-    return adapter.addMany(courses, { ...state, error: null, fetchingData: false });
+    return adapter.addMany(courses, {
+      ...state,
+      error: null,
+      allCoursesLoaded: true
+    });
   }),
   on(CoursesActions.loadCoursesFailure, (state, { error }) => {
     return {
       ...state,
       error,
-      fetchingData: false
+      allCoursesLoaded: false
     };
+  }),
+  on(CoursesActions.courseUpdate, state => {
+    return {
+      ...state,
+      fetchingData: true
+    }
+  }),
+  on(CoursesActions.courseUpdateSuccess, (state, { update }) => {
+    return adapter.updateOne(update, {
+      ...state,
+      fetchingData: false
+    });
+  }),
+  on(CoursesActions.courseUpdateFailure, (state, { error }) => {
+    return {
+      ...state,
+      error
+    }
   })
 );
 
-export const coursesSelectors = adapter.getSelectors();
+export const {
+  selectAll
+} = adapter.getSelectors();

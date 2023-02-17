@@ -5,17 +5,16 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { finalize, first, tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { Observable} from 'rxjs';
+import { finalize, take, tap } from 'rxjs/operators';
 import * as CoursesActions from './courses.actions';
+import * as CoursesSelectors from './courses.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesResolver implements Resolve<any> {
-  fetchingData = false;
-
   constructor(private store: Store) {}
 
   resolve(
@@ -23,14 +22,13 @@ export class CoursesResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<any> {
     return this.store.pipe(
-      tap(() => {
-        if (!this.fetchingData) {
-          this.fetchingData = true;
+      select(CoursesSelectors.selectCoursesLoadedFlag),
+      tap(areCoursesLoaded => {
+        if (!areCoursesLoaded) {
           this.store.dispatch(CoursesActions.loadCourses());
         }
       }),
-      first(),
-      finalize(() => (this.fetchingData = false))
+      take(1)
     );
   }
 }

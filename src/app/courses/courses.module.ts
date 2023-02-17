@@ -34,6 +34,7 @@ import * as fromCourses from './courses.reducers';
 import { CoursesResolver } from './courses.resolver';
 import { EffectsModule } from '@ngrx/effects';
 import { CoursesEffects } from './courses.effects';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export const coursesRoutes: Routes = [
   {
@@ -66,6 +67,7 @@ export const coursesRoutes: Routes = [
     MatSelectModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     RouterModule.forChild(coursesRoutes),
     StoreModule.forFeature(fromCourses.coursesFeatureKey, fromCourses.coursesReducer),
