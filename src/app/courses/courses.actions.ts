@@ -20,11 +20,26 @@ export const courseUpdate = createAction(
 );
 
 export const courseUpdateSuccess = createAction(
-  '[Update Courses Effect] Course Update Success',
+  '[Courses Effect] Course Update Success',
   props<{ update: Update<Course> }>()
 );
 
 export const courseUpdateFailure = createAction(
-  '[Update Courses Effect] Course Update Failure',
+  '[Courses Effect] Course Update Failure',
   props<{ error: any }>()
 );
+
+export const deleteCourse = createAction(
+  '[Course Card List] Delete Course',
+  props<{ id: number }>()
+)
+
+export const deleteCourseSuccess = createAction(
+  '[Courses Effect] Delete Course Success',
+  props<{ id: any }>()
+)
+
+export const deleteCourseFailure = createAction(
+  '[Courses Effect] Delete Course Failure',
+  props<{ error: any }>()
+)

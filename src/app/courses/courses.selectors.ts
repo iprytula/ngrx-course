@@ -21,14 +21,19 @@ export const selectAdvancedCourses = createSelector(
 export const selectInPromoCount = createSelector(
   selectAllCourses,
   courses => courses.filter(course => course.promo).length
-)
+);
 
 export const selectCoursesLoadedFlag = createSelector(
   selectCoursesState,
   state => state.allCoursesLoaded
-)
+);
 
 export const selectFetchingDataFlag = createSelector(
   selectCoursesState,
   state => state.fetchingData
+);
+
+export const selectDeletingCourseId = createSelector(
+  selectCoursesState,
+  state => state.deletingCourseId
 )

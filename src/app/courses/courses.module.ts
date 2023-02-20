@@ -35,6 +35,7 @@ import { CoursesResolver } from './courses.resolver';
 import { EffectsModule } from '@ngrx/effects';
 import { CoursesEffects } from './courses.effects';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeleteCourseDialogComponent } from './delete-course-dialog/delete-course-dialog.component';
 
 export const coursesRoutes: Routes = [
   {
@@ -78,6 +79,7 @@ export const coursesRoutes: Routes = [
     CoursesCardListComponent,
     EditCourseDialogComponent,
     CourseComponent,
+    DeleteCourseDialogComponent,
   ],
   exports: [
     HomeComponent,

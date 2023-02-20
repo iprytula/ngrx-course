@@ -45,4 +45,16 @@ export class CoursesEffects {
       this.snackBar.open('Course was saved successfully', 'OK', { duration: 2000 });
     })
   ), { dispatch: false });
+
+  deleteCourse$ = createEffect(() => this.actions$.pipe(
+    ofType(CoursesActions.deleteCourse),
+    concatMap(({ id }) => this.coursesHttpService.deleteCourse(id).pipe(
+      map(({ id }) => {
+        this.snackBar.open('Course was deleted successfully', 'OK', { duration: 2000 });
+
+        return CoursesActions.deleteCourseSuccess({ id: Number.parseInt(id) })
+      }),
+      catchError(error => of(CoursesActions.deleteCourseFailure({ error })))
+    ))
+  ))
 }

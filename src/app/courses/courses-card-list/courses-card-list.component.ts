@@ -1,8 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Course } from "../model/course";
 import { MatDialog } from "@angular/material/dialog";
 import { EditCourseDialogComponent } from "../edit-course-dialog/edit-course-dialog.component";
 import { defaultDialogConfig } from '../shared/default-dialog-config';
+import { Store } from '@ngrx/store';
+import * as CoursesActions from '../courses.actions';
+import { DeleteCourseDialogComponent } from '../delete-course-dialog/delete-course-dialog.component';
+import { Observable } from 'rxjs';
+import * as CoursesSelectors from '../courses.selectors';
 
 
 @Component({
@@ -13,13 +18,16 @@ import { defaultDialogConfig } from '../shared/default-dialog-config';
 export class CoursesCardListComponent implements OnInit {
 
   @Input() courses: Course[];
-  @Output() courseChanged = new EventEmitter();
+  deletingCourseId$: Observable<number>;
+
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private store: Store
   ) {
   }
 
   ngOnInit() {
+    this.deletingCourseId$ = this.store.select(CoursesSelectors.selectDeletingCourseId)
   }
 
   editCourse(course: Course) {
@@ -29,12 +37,17 @@ export class CoursesCardListComponent implements OnInit {
       course,
       mode: 'update'
     };
-    this.dialog.open(EditCourseDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe(() => this.courseChanged.emit());
+    this.dialog.open(EditCourseDialogComponent, dialogConfig);
   }
 
   onDeleteCourse(course: Course) {
+    const dialog = this.dialog.open(DeleteCourseDialogComponent);
+
+    dialog.afterClosed().subscribe(res => {
+      if (res) {
+        this.store.dispatch(CoursesActions.deleteCourse({ id: course.id }))
+      }
+    })
   }
 
 }

@@ -44,5 +44,8 @@ export class CoursesHttpService {
     return this.http.put('/api/course/' + courseId, changes);
   }
 
+  deleteCourse(courseId: number): Observable<any> {
+    return this.http.delete('/api/course/' + courseId);
+  }
 
 }

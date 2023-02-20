@@ -11,7 +11,8 @@ export const coursesFeatureKey = 'courses';
 export interface CoursesState extends EntityState<Course> {
   error: any;
   allCoursesLoaded: boolean,
-  fetchingData: boolean
+  fetchingData: boolean,
+  deletingCourseId: number
 }
 
 const compareCourses = (c1: Course, c2: Course) => {
@@ -30,7 +31,8 @@ export const adapter = createEntityAdapter<Course>({ sortComparer: compareCourse
 export const initialState = adapter.getInitialState({
   error: null,
   allCoursesLoaded: false,
-  fetchingData: false
+  fetchingData: false,
+  deletingCourseId: -1
 });
 
 export const coursesReducer = createReducer(
@@ -65,6 +67,28 @@ export const coursesReducer = createReducer(
     return {
       ...state,
       error
+    }
+  }),
+  on(CoursesActions.deleteCourse, (state, { id }) => {
+    return {
+      ...state,
+      fetchingData: true,
+      deletingCourseId: id
+    }
+  }),
+  on(CoursesActions.deleteCourseSuccess, (state, { id }) => {
+    return adapter.removeOne(id, {
+      ...state,
+      fetchingData: false,
+      deletingCourseId: -1
+    })
+  }),
+  on(CoursesActions.deleteCourseFailure, (state, { error }) => {
+    return {
+      ...state,
+      error,
+      fetchingData: false,
+      deletingCourseId: -1
     }
   })
 );
