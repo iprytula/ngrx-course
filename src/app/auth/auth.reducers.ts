@@ -6,34 +6,30 @@ import {
   createSelector,
   MetaReducer,
   on,
-} from "@ngrx/store";
-import { loginAction, logoutAction } from "../auth.actions";
-import { User } from "../model/user.model";
+} from '@ngrx/store';
+import * as AuthActions from './auth.actions';
+import { User } from './model/user.model';
 
-export const authFeatureKey = "auth";
+export const authFeatureKey = 'auth';
 
 export interface AuthState {
   user: User;
 }
 
 export const initialAuthState: AuthState = {
-  user: undefined,
+  user: null,
 };
-
-// export const reducers: ActionReducerMap<AuthState> = {
-
-// };
 
 export const authReducer = createReducer(
   initialAuthState,
-  on(loginAction, (state, action) => {
+  on(AuthActions.login, (state, action) => {
     return {
       user: action.user,
     };
   }),
-  on(logoutAction, (state, action) => {
+  on(AuthActions.logout, (state, action) => {
     return {
-      user: undefined
-    }
+      user: null,
+    };
   })
 );
