@@ -59,6 +59,7 @@ const routes: Routes = [
       },
     }),
     EffectsModule.forRoot([]),
+    EntityDataModule.forRoot({}),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
       routerState: RouterState.Minimal,
